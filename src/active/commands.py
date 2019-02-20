@@ -29,6 +29,7 @@ def command(cmd):
 
         # Handle request
         return cmd(dispatch, request)
+
     return _command_wrapper
 
 
