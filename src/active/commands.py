@@ -24,6 +24,10 @@ def command(cmd):
     @wraps(cmd)
     def _command_wrapper(request):
         """Accept the request and call wrapped function"""
+        # Dispatch request
+        dispatch(request)
+
+        # Handle request
         return cmd(dispatch, request)
     return _command_wrapper
 
