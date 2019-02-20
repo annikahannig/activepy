@@ -85,7 +85,7 @@ def update_user_state(action):
 
 Maybe add some logging:
 
-```
+```python
 @active.handler(CreateUserSuccess)
 def log_success(action):
     """User was successfully created"""
