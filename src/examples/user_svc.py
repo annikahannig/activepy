@@ -8,6 +8,8 @@ import random
 import active
 
 class CreateUserRequest(active.Action): pass
+class CreateUserResponse(active.Action): pass
+
 class CreateUserSuccess(active.Action): pass
 class CreateUserError(active.Action): pass
 
@@ -18,7 +20,9 @@ def create_user(dispatch, request):
     if request.username == "admin":
         print("Not creating user because reason.")
         dispatch(CreateUserError(message="Can not be admin!"))
-        return
+
+        return CreateUserResponse(
+            status="ERROR")
 
     print(f"Creating user: {request.username}")
     # ... rest of the owl
@@ -30,17 +34,20 @@ def create_user(dispatch, request):
 
     dispatch(CreateUserSuccess(user=user))
 
+    return CreateUserResponse(
+        status="OK",
+        user=user)
+
 
 @active.handler(
     CreateUserSuccess,
     CreateUserError)
 def update_user_state(action):
     """Something happened. Update some state."""
-    print("Updating user state with action:")
-    print(action)
+    print("Updating user state with action:", action)
 
 
 @active.handler(CreateUserSuccess)
-def log_succes(action):
+def log_success(action):
     """User was successfully created"""
     print("Created user:", action.user)
